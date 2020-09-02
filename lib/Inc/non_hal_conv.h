@@ -49,11 +49,13 @@
   * @{
   */
 
-NON_HAL_StatusTypeDef MY_CON_Int_to_BinString_8bit(int8_t date, uint8_t *bitstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef MY_CON_Int_to_BinString_32bit(int32_t date, uint8_t *bitstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef MY_CON_UInt_to_DecString_8bit(uint8_t date, uint8_t *decstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef MY_CON_Int_to_DecString_8bit(int8_t data, uint8_t *decstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef MY_CON_Int_to_DecString_32bit(uint32_t data, uint8_t *decstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_BinString_8bit(int8_t date, uint8_t *bitstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_BinString_32bit(int32_t date, uint8_t *bitstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_UInt_to_DecString_8bit(uint8_t date, uint8_t *decstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_DecString_8bit(int8_t data, uint8_t *decstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_UInt_to_DecString_32bit(uint32_t data, uint8_t *decstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_DecString_32bit(int32_t data, uint8_t *decstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_Float_to_DecString(float data, uint8_t *decstr, uint8_t sizebuf);
 
 /**
   * @}
