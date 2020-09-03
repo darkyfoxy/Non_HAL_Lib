@@ -299,6 +299,7 @@ NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_DecString_32bit(int32_t data, uint8_t *
   * @note 	example: `3.40282346639e+38; 3.40282346639; 9.32998362376`.
   * @warning The function dosen't support subnormal numbers (subnormal number = 0)
   * @note		The function supports 0, nan, +inf, -inf also.
+  * @note		The function faster then sptrinf() about 5-10 time.
   * @param  data a float value to convert to a character string
   * @param  bitstr a pointer on a character string
   * @param  sizebuf a size of a character string which must be least 14

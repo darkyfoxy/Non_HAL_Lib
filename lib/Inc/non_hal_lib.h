@@ -46,6 +46,29 @@
 /* Variables -----------------------------------------------------------------*/
 /* Constants -----------------------------------------------------------------*/
 /* Macros --------------------------------------------------------------------*/
+
+/**@defgroup Non_HAL_Debug_Tools Non HAL tools for a debuging
+  * @brief The group debuging tools
+  * @{
+  */
+
+/** @brief Enable the data watchpoint and trace unit(DWT) and enables the CYCCNT counter
+  */
+#define ENABLE_TIC_COUNTER()	do {CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; \
+  																DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk; \
+																 }while(0)
+
+#define CLOCK_CYCLE_COUNTER 	(DWT->CYCCNT)			/*!< The clock cycle counter in DWT */
+
+/** @brief Clear the CYCCNT register (the clock cycle counter in DWT)
+  */
+#define CLEAR_TIC_COUNTER() 	(CLOCK_CYCLE_COUNTER = 0)
+
+
+
+/**
+  * @}
+  */
 /* Functions -----------------------------------------------------------------*/
 
 
