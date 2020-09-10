@@ -17,11 +17,6 @@
   *             	- From character string:
   *             		+ string with binary symbols (0 or 1)        -> int8_t
   *             		+ string with binary symbols (0 or 1)        -> int32_t
-  *              		+ string with decimal symbols (from 0 to 9)  -> int8_t
-  *              		+ string with decimal symbols (from 0 to 9)  -> uint8_t
-  *              		+ string with decimal symbols (from 0 to 9)  -> int32_t
-  *              		+ string with decimal symbols (from 0 to 9)  -> uint32_t
-  *              		+ string with decimal symbols (from 0 to 9)  -> float
   *
   * @author     darkyfoxy [*GitHub*](https://github.com/darkyfoxy)
   * @version    0.01
@@ -473,3 +468,68 @@ NON_HAL_StatusTypeDef Non_HAL_CON_Float_to_DecString(float data, uint8_t *decstr
 	*decstr = 0;
 	return NON_HAL_OK;
 }
+
+/**
+  * @brief	The function to convert character string with binary symbols (0 or 1) to
+  * 				an int8_t value
+  * @note		If the function get a string with non-binary symbols (0 or 1),
+  * 				it return a NON_HAL_ERROR status
+  * @param  bitstr a pointer on a character string
+  * @param  data_out a pointer on an int8_t output value
+  * @retval NON_HAL_StatusTypeDef
+  */
+NON_HAL_StatusTypeDef Non_HAL_CON_BinString_to_Int_8bit(uint8_t *bitstr, int8_t *data_out)
+{
+	volatile int8_t data = 0;
+	for(;*bitstr != 0; bitstr++)
+	{
+		if(*bitstr != '0' && *bitstr != '1')
+		{
+			return NON_HAL_ERROR;
+		}
+		if(*bitstr == '1')
+		{
+			data <<= 1;
+			data = data | 1U;
+		}
+		else
+		{
+			data <<= 1;
+		}
+	}
+	*data_out = data;
+	return NON_HAL_OK;
+}
+
+/**
+  * @brief	The function to convert character string with binary symbols (0 or 1) to
+  * 				an int32_t value
+  * @note		If the function get a string with non-binary symbols (0 or 1),
+  * 				it return a NON_HAL_ERROR status
+  * @param  bitstr a pointer on a character string
+  * @param  data_out a pointer on an int32_t output value
+  * @retval NON_HAL_StatusTypeDef
+  */
+NON_HAL_StatusTypeDef Non_HAL_CON_BinString_to_Int_32bit(uint8_t *bitstr, int32_t *data_out)
+{
+	volatile int32_t data = 0;
+	for(;*bitstr != 0; bitstr++)
+	{
+		if(*bitstr != '0' && *bitstr != '1')
+		{
+			return NON_HAL_ERROR;
+		}
+		if(*bitstr == '1')
+		{
+			data <<= 1;
+			data = data | 1U;
+		}
+		else
+		{
+			data <<= 1;
+		}
+	}
+	*data_out = data;
+	return NON_HAL_OK;
+}
+

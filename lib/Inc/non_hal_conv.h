@@ -7,7 +7,7 @@
   *
   * @author     darkyfoxy [*GitHub*](https://github.com/darkyfoxy)
   * @version    0.01
-  * @date       29.08.2020
+  * @data       29.08.2020
   *
   ******************************************************************************
   * @copyright	<h3>Copyright (c) 2020 Pavlov V.</h3>
@@ -49,9 +49,9 @@
   * @{
   */
 
-NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_BinString_8bit(int8_t date, uint8_t *bitstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_BinString_32bit(int32_t date, uint8_t *bitstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef Non_HAL_CON_UInt_to_DecString_8bit(uint8_t date, uint8_t *decstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_BinString_8bit(int8_t data, uint8_t *bitstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_BinString_32bit(int32_t data, uint8_t *bitstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Non_HAL_CON_UInt_to_DecString_8bit(uint8_t data, uint8_t *decstr, uint8_t sizebuf);
 NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_DecString_8bit(int8_t data, uint8_t *decstr, uint8_t sizebuf);
 NON_HAL_StatusTypeDef Non_HAL_CON_UInt_to_DecString_32bit(uint32_t data, uint8_t *decstr, uint8_t sizebuf);
 NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_DecString_32bit(int32_t data, uint8_t *decstr, uint8_t sizebuf);
@@ -61,4 +61,15 @@ NON_HAL_StatusTypeDef Non_HAL_CON_Float_to_DecString(float data, uint8_t *decstr
   * @}
   */
 
+/**@defgroup Non_HAL_Converters_to_string Converters to a string
+  * @brief Converters from numeric types to a character string
+  * @{
+  */
+
+NON_HAL_StatusTypeDef Non_HAL_CON_BinString_to_Int_8bit(uint8_t *bitstr, int8_t *data_out);
+NON_HAL_StatusTypeDef Non_HAL_CON_BinString_to_Int_32bit(uint8_t *bitstr, int32_t *data_out);
+
+/**
+  * @}
+  */
 #endif /* NON_HAL_CONV_H_ */
