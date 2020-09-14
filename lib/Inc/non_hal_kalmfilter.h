@@ -1,12 +1,14 @@
 /**
   ******************************************************************************
-  * @file       non_hal_def.h
-  * @brief      This file contains Non HAL common defines, enumeration, macros
-  *             and structures definitions.
+  * @file       non_hal_kalmfilter.h
+  * @brief      Header for non_hal_kalmfilter.c file.
+  * 						This file defines functions to filter data with the fast
+  *             Kalman filter.
+  *
   *
   * @author     darkyfoxy [*GitHub*](https://github.com/darkyfoxy)
   * @version    0.01
-  * @date       29.08.2020
+  * @date       13.09.2020
   *
   ******************************************************************************
   * @copyright  <h3>Copyright (c) 2020 Pavlov V.</h3>
@@ -31,27 +33,30 @@
   ******************************************************************************
   */
 
-#ifndef NON_HAL_DEF_H_
-#define NON_HAL_DEF_H_
+#ifndef NON_HAL_KALMFILTER_H_
+#define NON_HAL_KALMFILTER_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include <stdbool.h>
+#include "non_hal_def.h"
 
 /* Types ---------------------------------------------------------------------*/
 
-/**@defgroup Non_HAL_Common_Def Non HAL common defines
-  * @brief The group for Non HAL common defines
+/**@defgroupNon_HAL_Kalman_filter_Structure Kalman filter structure
+  * @brief Structure for the fast Kalman filter
   * @{
   */
 
 /**
-  * @brief The Non HAL type for a returned status of library functions
+  * @brief Structure with main parameters for the fast Kalman filter
   */
-typedef enum
+typedef struct
 {
-  NON_HAL_OK     = 0x0U,   /*!< 0x0U*/
-  NON_HAL_ERROR  = 0x1U    /*!< 0x1U*/
-} NON_HAL_StatusTypeDef;
+	float errmeasure;		         /*!<A predicted error measure*/
+	volatile float errestimate;  /*!<A error estimate*/
+	float speed;                 /*!<A rate of change of values*/
+	volatile float lastestimate; /*!<A previous value*/
+	volatile float kalmangain;   /*!<The Kalman Gain*/
+}Filter_Kalman_Struct;
 
 /**
   * @}
@@ -62,5 +67,16 @@ typedef enum
 /* Macros --------------------------------------------------------------------*/
 /* Functions -----------------------------------------------------------------*/
 
+/**@defgroup Non_HAL_Kalman_filter Kalman filter
+  * @brief A filtering data with the fast Kalman filter
+  * @{
+  */
 
-#endif /* NON_HAL_DEF_H_ */
+NON_HAL_StatusTypeDef Filt_Kalm_Init(Filter_Kalman_Struct *pData, float ErrMeasure, float Speed);
+float Filt_Kalm(Filter_Kalman_Struct *pData, float value);
+
+/**
+  * @}
+  */
+
+#endif /* NON_HAL_KALMFILTER_H_ */

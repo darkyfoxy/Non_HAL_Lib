@@ -5,7 +5,8 @@ This is the library for STM32 with functions absent in the HAL library. This lib
 
 At this moment, the library contains the follow main modules:
 
-+ non_hal_conv.c - functions for converting numeric types to character strings and vice versa.
++ non_hal_conv.c - functions for converting numeric types to character strings and vice versa;
++ non_hal_kalmfilter.c - functions to filter data with the fast Kalman filter.
 
 ## How to use
 

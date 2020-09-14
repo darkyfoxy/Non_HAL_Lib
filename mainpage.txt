@@ -10,7 +10,8 @@
   * @section What_the_library_contains What the library contains
   *
   * At this moment, the library contains follow main modules:
-  *   + non_hal_conv.c - functions for converting numeric types to a character string and vice versa.
+  *   + non_hal_conv.c - functions for converting numeric types to a character string and vice versa;
+  *   + non_hal_kalmfilter.c - functions to filter data with the fast Kalman filter.
   *
   * @section How_to_use How to use
   *

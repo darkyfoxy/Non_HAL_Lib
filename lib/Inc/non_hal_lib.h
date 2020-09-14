@@ -8,11 +8,11 @@
   *             main.c).
   *
   * @author     darkyfoxy [*GitHub*](https://github.com/darkyfoxy)
-  * @version    0.01
+  * @version    0.02
   * @date       04.08.2020
   *
   ******************************************************************************
-  * @copyright	<h3>Copyright (c) 2020 Pavlov V.</h3>
+  * @copyright  <h3>Copyright (c) 2020 Pavlov V.</h3>
   *
   * Permission is hereby granted, free of charge, to any person obtaining a copy
   * of this software and associated documentation files (the "Software"), to deal
@@ -41,6 +41,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f4xx_hal.h"
 #include "non_hal_conv.h"
+#include "non_hal_filter.h"
 
 /* Types ---------------------------------------------------------------------*/
 /* Variables -----------------------------------------------------------------*/
@@ -54,15 +55,15 @@
 
 /** @brief Enable the data watchpoint and trace unit(DWT) and enables the CYCCNT counter
   */
-#define ENABLE_TIC_COUNTER()	do {CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; \
-  																DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk; \
-																 }while(0)
+#define ENABLE_TIC_COUNTER()  do {CoreDebug->DEMCR |= CoreDebug_DEMCR_TRCENA_Msk; \
+                                  DWT->CTRL |= DWT_CTRL_CYCCNTENA_Msk; \
+                                 }while(0)
 
-#define CLOCK_CYCLE_COUNTER 	(DWT->CYCCNT)			/*!< The clock cycle counter in DWT */
+#define CLOCK_CYCLE_COUNTER   (DWT->CYCCNT)      /*!< The clock cycle counter in DWT */
 
 /** @brief Clear the CYCCNT register (the clock cycle counter in DWT)
   */
-#define CLEAR_TIC_COUNTER() 	(CLOCK_CYCLE_COUNTER = 0)
+#define CLEAR_TIC_COUNTER()   (CLOCK_CYCLE_COUNTER = 0)
 
 
 

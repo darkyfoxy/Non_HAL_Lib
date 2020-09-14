@@ -1,13 +1,12 @@
 /**
   ******************************************************************************
-  * @file       non_hal_conv.h
-  * @brief      Header for non_hal_conv.c file.
-  *             This file defines functions to convert numeric types to a
-  *             character string and vice versa.
+  * @file       non_hal_kalmfilter.c
+  * @brief      This file provides functions to filter data with the fast
+  *             Kalman filter.
   *
   * @author     darkyfoxy [*GitHub*](https://github.com/darkyfoxy)
   * @version    0.01
-  * @date       29.08.2020
+  * @date       13.09.2020
   *
   ******************************************************************************
   * @copyright  <h3>Copyright (c) 2020 Pavlov V.</h3>
@@ -32,11 +31,10 @@
   ******************************************************************************
   */
 
-#ifndef NON_HAL_CONV_H_
-#define NON_HAL_CONV_H_
 
 /* Includes ------------------------------------------------------------------*/
-#include "non_hal_def.h"
+#include "non_hal_lib.h"
+#include "math.h"
 
 /* Types ---------------------------------------------------------------------*/
 /* Variables -----------------------------------------------------------------*/
@@ -44,32 +42,36 @@
 /* Macros --------------------------------------------------------------------*/
 /* Functions -----------------------------------------------------------------*/
 
-/**@defgroup Non_HAL_Converters_to_string Converters to a string
-  * @brief Converters from numeric types to a character string
-  * @{
+/**
+  * @brief  The function to initial parameters for the fast Kalman filter
+  * @param  pData a pointer on a empty Filter_Kalman_Struct structure
+  * @param  ErrMeasure a predicted input date standard deviation
+  * @param  Speed a rate of change of output values (from 0,001 to 1)
+  * @retval NON_HAL_StatusTypeDef
   */
-
-NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_BinString_8bit(int8_t data, uint8_t *bitstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_BinString_32bit(int32_t data, uint8_t *bitstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef Non_HAL_CON_UInt_to_DecString_8bit(uint8_t data, uint8_t *decstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_DecString_8bit(int8_t data, uint8_t *decstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef Non_HAL_CON_UInt_to_DecString_32bit(uint32_t data, uint8_t *decstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef Non_HAL_CON_Int_to_DecString_32bit(int32_t data, uint8_t *decstr, uint8_t sizebuf);
-NON_HAL_StatusTypeDef Non_HAL_CON_Float_to_DecString(float data, uint8_t *decstr, uint8_t sizebuf);
+NON_HAL_StatusTypeDef Filt_Kalm_Init(Filter_Kalman_Struct *pData, float ErrMeasure, float Speed)
+{
+  pData->errmeasure = ErrMeasure;
+  pData->errestimate = ErrMeasure;
+  pData->speed = Speed;
+  pData->lastestimate = 0.0;
+  pData->kalmangain = 0.0;
+  return NON_HAL_OK;
+}
 
 /**
-  * @}
+  * @brief  The function to filter data with the fast Kalman filter.
+  * @param  pData a pointer on a empty Filter_Kalman_Struct structure
+  * @param  value a input value
+  * @retval currentestimate a output value past the fast Kalman filtering
   */
-
-/**@defgroup Non_HAL_Converters_to_string Converters to a string
-  * @brief Converters from numeric types to a character string
-  * @{
-  */
-
-NON_HAL_StatusTypeDef Non_HAL_CON_BinString_to_Int_8bit(uint8_t *bitstr, int8_t *data_out);
-NON_HAL_StatusTypeDef Non_HAL_CON_BinString_to_Int_32bit(uint8_t *bitstr, int32_t *data_out);
-
-/**
-  * @}
-  */
-#endif /* NON_HAL_CONV_H_ */
+float Filt_Kalm(Filter_Kalman_Struct *pData, float value)
+{
+  volatile float currentestimate;
+  pData->kalmangain = pData->errestimate / (pData->errestimate + pData->errmeasure);
+  currentestimate = pData->lastestimate + pData->kalmangain * (value - pData->lastestimate);
+  pData->errestimate =  (1.0 - pData->kalmangain) * pData->errestimate +\
+                        fabs(pData->lastestimate - currentestimate) * pData->speed;
+  pData->lastestimate = currentestimate;
+  return currentestimate;
+}
